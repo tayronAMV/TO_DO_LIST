@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ToDoList</title>
+        <script src="script.js" defer></script>
+        <style>
+        
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                flex-direction: column;
+            }
+            .task-card {
+                border: 1px solid #000;
+                border-radius: 5px;
+                margin: 10px;
+                padding: 10px;
+                width: 200px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .img{
+                width: 50px; /* Adjust width as needed */
+                height: 50px; /* Adjust height as needed */
+                border-radius: 10px; /* Adjust radius to match the button's shape */
+                margin-right: auto; /* Add some space between the button and the text */
+            }
+            .task-button {
+                width: 50px; /* Adjust width as needed */
+                height: 50px; /* Adjust height as needed */
+                border-radius: 10px; /* Adjust radius to match the button's shape */
+                margin-left: auto; /* Add some space between the button and the text */
+                
+            }
+        </style>
+    </head>
+    <body>
+        <h1>TO DO LIST</h1>
+        <h2>Your Tasks:</h2>
+        <div id="god">
+            <button class="button open-button">Add Task</button>
+            <button id = "clr"> </button>
+            <dialog id="dialog">
+                <form method="dialog" id="form">
+                    <label for="Task">What is the task</label>
+                    <input type="text" id="task" name="task">
+                    <button class="button close-button" type="submit">Submit</button>
+                </form>
+            </dialog>
+            <dialog id="task-dialog" >
+                <button> Remove</button>
+            </dialog>
+            <div class="container">
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+
+
+
+now for the javascript
+const openButton = document.querySelector('.open-button');
+const form = document.getElementById('form');
+const dialog = document.getElementById('dialog');
+const container = document.querySelector('.container');
+
+openButton.addEventListener('click', () => {
+    dialog.showModal();
+});
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    const taskInput = document.getElementById('task');
+    const taskText = taskInput.value;
+    
+    if (taskText) {
+        addTask(taskText);
+        taskInput.value = ''; // Clear the input field
+        dialog.close();  
+    }
+
+});
+
+function addTask(taskText) {
+    const card = document.createElement('div');
+    card.className = 'task-card';
+
+    const button = document.createElement('button');
+    button.className = 'task-button';
+    button.style.background = '#fff'; // Initial white background
+    button.style.border = '1px solid #000'; // Black border
+
+    let flag = 0;  // Declare the flag outside the event listener
+    
+    button.addEventListener('click', () => {
+        if (!flag) {
+            button.style.background = '#000'; // Change to black background
+            flag = 1;
+        } else {
+            button.style.background = '#fff'; // Change back to white background
+            flag = 0;
+        }
+    });
+
+
+    const set = document.createElement('button');
+    set.className = 'img';
+    set.style.backgroundImage = "url('img/dot.svg')";
+    set.style.backgroundPosition = "center"; // Center the image
+    set.style.backgroundSize = "contain"; // Contain the image within the button
+    set.style.backgroundRepeat = "no-repeat"; // Prevent repeating
+    set.style.border = '1px solid #000'; // Black border
+    const text_dialog = document.getElementById('task-dialog');
+    set.addEventListener('click', () => {
+        text_dialog.showModal();
+    });
+    
+    
+
+    const text = document.createElement('p');
+    text.textContent = taskText;
+    
+    card.append(set);
+    card.appendChild(text);
+    card.appendChild(button);
+
+    
+    container.appendChild(card);
+}
+
+
+
+
+
+how to make a clear buttom that clear all the tasks?
+
