@@ -140,5 +140,5 @@ function addTask(taskText) {
 
 
 
-how to make a clear buttom that clear all the tasks?
+
 
